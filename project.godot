@@ -20,3 +20,7 @@ window/size/viewport_width=1024
 window/size/viewport_height=600
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[physics]
+
+2d/default_gravity=0
