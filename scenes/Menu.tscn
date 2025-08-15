@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://b758dfouxt11c"]
+
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="1"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBox" type="VBoxContainer" parent="Center"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Title" type="Label" parent="Center/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Mini Golf"
+horizontal_alignment = 1
+
+[node name="Play" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "Play"
+
+[node name="Quit" type="Button" parent="Center/VBox"]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="Center/VBox/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Center/VBox/Quit" to="." method="_on_quit_pressed"]

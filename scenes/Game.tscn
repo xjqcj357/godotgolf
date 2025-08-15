@@ -1,0 +1,102 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/ball.png" id="1"]
+[ext_resource type="Texture2D" path="res://assets/hole.png" id="2"]
+[ext_resource type="Script" path="res://scripts/Game.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/Ball.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/Hole.gd" id="5"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(1000, 20)
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(20, 560)
+
+[sub_resource type="CircleShape2D" id="3"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="4"]
+radius = 18.0
+
+[sub_resource type="PhysicsMaterial" id="5"]
+friction = 0.2
+bounce = 0.6
+
+[node name="Game" type="Node2D"]
+script = ExtResource("3")
+
+[node name="Ground" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.2, 0.6, 0.2, 1.0)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="Top" type="StaticBody2D" parent="Walls"]
+position = Vector2(512, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top"]
+shape = SubResource("1")
+
+[node name="Bottom" type="StaticBody2D" parent="Walls"]
+position = Vector2(512, 590)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
+shape = SubResource("1")
+
+[node name="Left" type="StaticBody2D" parent="Walls"]
+position = Vector2(10, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
+shape = SubResource("2")
+
+[node name="Right" type="StaticBody2D" parent="Walls"]
+position = Vector2(1014, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
+shape = SubResource("2")
+
+[node name="Ball" type="RigidBody2D" parent="."]
+position = Vector2(200, 300)
+script = ExtResource("4")
+physics_material_override = SubResource("5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball"]
+texture = ExtResource("1")
+centered = true
+
+[node name="Line2D" type="Line2D" parent="Ball"]
+width = 3.0
+default_color = Color(1, 1, 1, 1)
+visible = false
+
+[node name="Hole" type="Area2D" parent="."]
+position = Vector2(850, 300)
+script = ExtResource("5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hole"]
+shape = SubResource("4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Hole"]
+texture = ExtResource("2")
+centered = true
+modulate = Color(0, 0, 0, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="VBox" type="VBoxContainer" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+
+[node name="StrokeLabel" type="Label" parent="UI/VBox"]
+text = "Strokes: 0"
+
+[node name="MessageLabel" type="Label" parent="UI/VBox"]
+text = ""
+
+[connection signal="shot_taken" from="Ball" to="." method="_on_shot_taken"]
+[connection signal="body_entered" from="Hole" to="Hole" method="_on_body_entered"]
+[connection signal="ball_sunk" from="Hole" to="." method="_on_ball_sunk"]
