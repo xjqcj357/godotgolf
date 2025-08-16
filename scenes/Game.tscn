@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/ball.png" id="1"]
 [ext_resource type="Texture2D" path="res://assets/hole.png" id="2"]
 [ext_resource type="Script" path="res://scripts/Game.gd" id="3"]
 [ext_resource type="Script" path="res://scripts/Ball.gd" id="4"]
 [ext_resource type="Script" path="res://scripts/Hole.gd" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/Guard.tscn" id="6"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(1000, 20)
@@ -22,6 +23,18 @@ radius = 18.0
 friction = 0.2
 bounce = 0.6
 
+[sub_resource type="OccluderPolygon2D" id="6"]
+polygon = PackedVector2Array(Vector2(-500, -10), Vector2(500, -10), Vector2(500, 10), Vector2(-500, 10))
+
+[sub_resource type="OccluderPolygon2D" id="7"]
+polygon = PackedVector2Array(Vector2(-500, -10), Vector2(500, -10), Vector2(500, 10), Vector2(-500, 10))
+
+[sub_resource type="OccluderPolygon2D" id="8"]
+polygon = PackedVector2Array(Vector2(-10, -280), Vector2(10, -280), Vector2(10, 280), Vector2(-10, 280))
+
+[sub_resource type="OccluderPolygon2D" id="9"]
+polygon = PackedVector2Array(Vector2(-10, -280), Vector2(10, -280), Vector2(10, 280), Vector2(-10, 280))
+
 [node name="Game" type="Node2D"]
 script = ExtResource("3")
 
@@ -38,11 +51,17 @@ position = Vector2(512, 10)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Top"]
 shape = SubResource("1")
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Top"]
+occluder = SubResource("6")
+
 [node name="Bottom" type="StaticBody2D" parent="Walls"]
 position = Vector2(512, 590)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
 shape = SubResource("1")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Bottom"]
+occluder = SubResource("7")
 
 [node name="Left" type="StaticBody2D" parent="Walls"]
 position = Vector2(10, 300)
@@ -50,11 +69,17 @@ position = Vector2(10, 300)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
 shape = SubResource("2")
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Left"]
+occluder = SubResource("8")
+
 [node name="Right" type="StaticBody2D" parent="Walls"]
 position = Vector2(1014, 300)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
 shape = SubResource("2")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Walls/Right"]
+occluder = SubResource("9")
 
 [node name="Ball" type="RigidBody2D" parent="."]
 position = Vector2(200, 300)
@@ -84,6 +109,10 @@ shape = SubResource("4")
 texture = ExtResource("2")
 centered = true
 modulate = Color(0, 0, 0, 1)
+
+[node name="Guard" parent="." instance=ExtResource("6")]
+position = Vector2(400, 300)
+patrol_points = PackedVector2Array(Vector2(400, 300), Vector2(600, 300))
 
 [node name="UI" type="CanvasLayer" parent="."]
 
