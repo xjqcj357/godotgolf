@@ -32,5 +32,8 @@ func _setup_flashlight() -> void:
     tex.gradient = grad
     tex.width = 256
     tex.height = 256
-    tex.fill = GradientTexture2D.FILL_CONICAL
+    tex.fill = GradientTexture2D.FILL_RADIAL
     light.texture = tex
+    var mat := ShaderMaterial.new()
+    mat.shader = load("res://assets/flashlight_cone.gdshader")
+    light.material = mat
