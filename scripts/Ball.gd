@@ -1,4 +1,5 @@
 extends RigidBody2D
+@warning_ignore("unused_signal")
 signal shot_taken
 
 @export var power_scale: float = 10.0
