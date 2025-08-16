@@ -9,7 +9,7 @@ var _current_index: int = 0
 func _ready() -> void:
     _setup_flashlight()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
     if patrol_points.is_empty():
         velocity = Vector2.ZERO
         return
