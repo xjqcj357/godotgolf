@@ -1,4 +1,5 @@
 extends Area2D
+@warning_ignore("unused_signal")
 signal ball_sunk
 
 func _on_body_entered(body):
